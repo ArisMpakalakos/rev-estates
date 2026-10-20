@@ -29,8 +29,15 @@
 </head>
 <body>
 
-<!-- ΕΙΣΑΓΩΓΗ: οθόνη με το λογότυπο που εμφανίζεται 1 φορά στην αρχή και μετά φεύγει προς τα πάνω (δείτε main.js και styles.css) -->
-<div class="intro" id="intro" aria-hidden="true"><img src="images/logo.png" alt="" width="1691" height="956"></div>
+<!-- ΕΙΣΑΓΩΓΗ (1η επίσκεψη ανά συνεδρία): πρώτα φαίνεται το λογότυπο, μετά μπαίνει μια πόρτα (δύο φύλλα) και ανοίγει,
+     αποκαλύπτοντας τη σελίδα. Η κίνηση γίνεται με CSS (styles.css → ".intro"), το main.js την αφαιρεί όταν τελειώσει. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <!-- 1. Η οθόνη με το λογότυπο -->
+  <div class="intro__logo"><img src="images/logo.png" alt="" width="1691" height="956"></div>
+  <!-- 2. Τα δύο φύλλα της πόρτας -->
+  <div class="intro__door intro__door--l"></div>
+  <div class="intro__door intro__door--r"></div>
+</div>
 
 <!-- Σύνδεσμος για χρήστες πληκτρολογίου/αναγνώστη οθόνης: πηγαίνει κατευθείαν στη φόρμα -->
 <a class="skip" href="#contact">Μετάβαση στη φόρμα επικοινωνίας</a>
@@ -179,7 +186,7 @@
     <div class="lock__stick">
       <!-- Το μήνυμα που αποκαλύπτεται όταν ανοίξουν οι πόρτες -->
       <div class="lock__reveal">
-        <h2 id="lock-title" class="lock__title">Παραδώστε μας το κλειδί.</h2>
+        <h2 id="lock-title" class="lock__title">MOTO ΕΤΑΙΡΙΑΣ.</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
       <!-- Τα δύο φύλλα της πόρτας (αριστερό και δεξί) -->

@@ -14,25 +14,26 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------------------------------------------------------------
-   * 1. ΕΙΣΑΓΩΓΗ: το λογότυπο εμφανίζεται και μετά "φεύγει" προς τα πάνω.
+   * 1. ΕΙΣΑΓΩΓΗ: λογότυπο → η πόρτα μπαίνει και ανοίγει → φαίνεται η σελίδα.
+   *    Η κίνηση γίνεται όλη με CSS· εδώ μόνο καθαρίζουμε όταν τελειώσει.
    *    Παίζει μόνο την 1η φορά ανά επίσκεψη (το θυμάται το sessionStorage).
    * --------------------------------------------------------------- */
   var intro = document.getElementById('intro');
   if (intro && root.classList.contains('intro-on')) {
-    // Καθαρισμός: βγάζει την οθόνη εισαγωγής από τη σελίδα και σημειώνει ότι εμφανίστηκε.
+    // Καθαρισμός: βγάζει την εισαγωγή από τη σελίδα και σημειώνει ότι εμφανίστηκε.
     var done = function () {
       root.classList.remove('intro-on');
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       try { sessionStorage.setItem('rv-intro', '1'); } catch (e) {}
     };
-    // Όταν τελειώσει το animation "έξοδος", κάνουμε τον καθαρισμό.
-    intro.addEventListener('animationend', function (e) { if (e.animationName === 'introOut') done(); });
-    // Μετά από 0,65 δευτερόλεπτα ξεκινά η έξοδος (προσθήκη κλάσης "go").
-    setTimeout(function () { intro.classList.add('go'); }, 650);
-    // Δίχτυ ασφαλείας: αν για κάποιο λόγο δεν ολοκληρωθεί, τη βγάζουμε στα 2,8 δευτερόλεπτα.
+    // Όταν τελειώσει το άνοιγμα της πόρτας (animation "doorOutL"/"doorOutR"), κάνουμε τον καθαρισμό.
+    intro.addEventListener('animationend', function (e) {
+      if (e.animationName === 'doorOutL' || e.animationName === 'doorOutR') done();
+    });
+    // Δίχτυ ασφαλείας: αν για κάποιο λόγο δεν ολοκληρωθεί, την αφαιρούμε στα 2,8 δευτερόλεπτα.
     setTimeout(done, 2800);
   } else if (intro && intro.parentNode) {
-    // Δεν χρειάζεται εισαγωγή (π.χ. ξαναεπισκέψη): αφαιρούμε το στοιχείο.
+    // Δεν χρειάζεται εισαγωγή (π.χ. ξαναεπίσκεψη): αφαιρούμε το στοιχείο.
     intro.parentNode.removeChild(intro);
   }
 

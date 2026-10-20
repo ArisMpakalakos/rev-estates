@@ -63,7 +63,7 @@
   --head: 4.5rem;                    /* ύψος της επάνω μπάρας */
   --intro: 0s;                       /* καθυστέρηση των animations του hero (αλλάζει όταν παίζει η εισαγωγή) */
 }
-html.intro-on { --intro: .8s; }      /* όταν παίζει η εισαγωγή, το hero περιμένει 0,8 δευτερόλεπτα */
+html.intro-on { --intro: 1.4s; }      /* το hero ξεκινά να εμφανίζεται όταν αρχίζει να ανοίγει η πόρτα */      /* όταν παίζει η εισαγωγή, το hero περιμένει 0,8 δευτερόλεπτα */
 
 /* ================= ΒΑΣΗ ================= */
 *, *::before, *::after { box-sizing: border-box; }   /* το πλάτος περιλαμβάνει padding και border */
@@ -94,13 +94,28 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round
 .intro img { mix-blend-mode: multiply; }                                       /* στην εισαγωγή "χάνεται" το λευκό φόντο */
 .logo--foot { height: 92px; padding: 0; background: transparent; mix-blend-mode: multiply; }  /* στο footer το λευκό φόντο γίνεται ένα με τη σελίδα */
 
-/* ================= ΕΙΣΑΓΩΓΗ (1η επίσκεψη) ================= */
-.intro { position: fixed; inset: 0; z-index: 120; display: none; place-items: center; background: var(--bg); }  /* κρυφή από προεπιλογή */
-html.intro-on .intro { display: grid; animation: introOut .6s var(--ease-in-out) 2.4s forwards; }  /* φαίνεται όταν το JS/inline script βάλει intro-on· φεύγει αυτόματα στα 2,4s αν το JS αποτύχει */
-.intro img { width: min(52vw, 300px); height: auto; mix-blend-mode: multiply; animation: logoIn .5s var(--ease-out) .05s both; }
-.intro.go { animation: introOut .6s var(--ease-in-out) forwards; }               /* η κλάση "go" μπαίνει από το main.js */
+/* ================= ΕΙΣΑΓΩΓΗ: λογότυπο → η πόρτα μπαίνει → η πόρτα ανοίγει (1η επίσκεψη) =================
+   Χρονισμός (δευτερόλεπτα): 0–0,8 φαίνεται το λογότυπο · 0,8–1,15 τα φύλλα μπαίνουν από τα πλάγια και κλείνουν ·
+   1,3–2,05 η πόρτα ανοίγει και φαίνεται η σελίδα. Αλλάξτε τα νούμερα στα animations παρακάτω για πιο γρήγορη/αργή κίνηση. */
+.intro { position: fixed; inset: 0; z-index: 120; display: none; }              /* κρυφή από προεπιλογή· φαίνεται μόνο με την κλάση intro-on στο <html> */
+html.intro-on .intro { display: block; animation: introGone 0s 2.3s forwards; }   /* δίχτυ ασφαλείας: αν το JS αποτύχει, εξαφανίζεται από μόνη της στα 2,3s */
+.intro__logo { position: absolute; inset: 0; display: grid; place-items: center; background: var(--bg); animation: logoGone 0s 1.15s forwards; }  /* η οθόνη του λογοτύπου κρύβεται όταν κλείσει η πόρτα από πάνω της */
+.intro__logo img { width: min(52vw, 300px); height: auto; mix-blend-mode: multiply; animation: logoIn .5s var(--ease-out) .05s both; }
 @keyframes logoIn { from { opacity: 0; transform: scale(.96); filter: blur(6px); } }   /* το λογότυπο εμφανίζεται από θολό */
-@keyframes introOut { to { transform: translateY(-100%); visibility: hidden; } }       /* η οθόνη φεύγει προς τα πάνω */
+@keyframes logoGone { to { visibility: hidden; } }
+/* Τα φύλλα της πόρτας: σκούρα, με πλαίσια διακόσμησης και μια μικρή χρυσή λαβή δίπλα στην ένωση */
+.intro__door { position: absolute; top: 0; bottom: 0; width: 50.4%; background: var(--green-deep); will-change: transform; }
+.intro__door::before { content: ""; position: absolute; inset: 9% 9%; border: 1px solid rgba(185, 201, 178, .2); border-radius: 6px; }
+.intro__door::after { content: ""; position: absolute; inset: 13% 13%; border: 1px solid rgba(185, 201, 178, .1); border-radius: 4px; }
+.intro__door--l { left: 0; background-image: radial-gradient(circle at calc(100% - 26px) 50%, var(--warm) 0 5px, transparent 6px); box-shadow: inset -1px 0 0 rgba(185, 201, 178, .18); transform: translate3d(-101%, 0, 0);
+  animation: doorInL .35s var(--ease-in-out) .8s both, doorOutL .75s var(--ease-in-out) 1.3s forwards; }   /* πρώτα μπαίνει, μετά ανοίγει */
+.intro__door--r { right: 0; background-image: radial-gradient(circle at 26px 50%, var(--warm) 0 5px, transparent 6px); box-shadow: inset 1px 0 0 rgba(185, 201, 178, .18); transform: translate3d(101%, 0, 0);
+  animation: doorInR .35s var(--ease-in-out) .8s both, doorOutR .75s var(--ease-in-out) 1.3s forwards; }
+@keyframes doorInL { from { transform: translate3d(-101%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes doorInR { from { transform: translate3d(101%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes doorOutL { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-101%, 0, 0); } }
+@keyframes doorOutR { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(101%, 0, 0); } }
+@keyframes introGone { to { visibility: hidden; pointer-events: none; } }
 
 /* ================= ΕΠΑΝΩ ΜΠΑΡΑ (header) ================= */
 .top {
