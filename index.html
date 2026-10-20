@@ -1,29 +1,51 @@
 <!doctype html>
+<!--
+  index.html — η σελίδα (μία σελίδα, ελληνικά).
+  Στυλ: styles.css · Συμπεριφορά/animations: main.js · Γραμματοσειρές: fonts/ · Εικόνες και λογότυπο: images/ · Βίντεο: video/
+  Οι ενότητες με lorem ipsum και οι εικονογραφήσεις SVG είναι ΠΡΟΣΩΡΙΝΑ και τα αντικαθιστάτε με τα πραγματικά σας.
+-->
 <html lang="el">
 <head>
+<!-- Κωδικοποίηση χαρακτήρων (απαραίτητη για τα ελληνικά) -->
 <meta charset="utf-8">
+<!-- Σωστό μέγεθος στα κινητά -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Τίτλος καρτέλας και Google. Αλλάξτε τον όταν οριστικοποιηθεί το μήνυμα της εταιρείας -->
 <title>Rev Estates | Διαχείριση βραχυχρόνιας μίσθωσης</title>
+<!-- Περιγραφή που εμφανίζει η Google κάτω από τον τίτλο (SEO) -->
 <meta name="description" content="Η Rev Estates αναλαμβάνει τη διαχείριση της βραχυχρόνιας μίσθωσης του ακινήτου σας. Στείλτε μας μήνυμα για να μιλήσουμε.">
+<!-- Χρώμα της μπάρας του browser στα κινητά -->
 <meta name="theme-color" content="#fbfbf8">
+<!-- Εικονίδιο καρτέλας (favicon). Καλύτερα αργότερα ένα τετράγωνο εικονίδιο -->
 <link rel="icon" href="images/logo.png">
+<!-- Μικρό script στην κορυφή: αποφασίζει ΑΝ θα παίξει η εισαγωγή (μόνο 1η επίσκεψη και όχι με reduced-motion).
+     Βάζει την κλάση "intro-on" στο <html> πριν φανεί οτιδήποτε, ώστε να μην "αναβοσβήνει" η σελίδα. -->
 <script>try{if(!sessionStorage.getItem('rv-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-on')}}catch(e){}</script>
+<!-- Προφόρτωση των βασικών γραμματοσειρών, ώστε το κείμενο να εμφανίζεται γρήγορα -->
 <link rel="preload" href="fonts/commissioner-greek.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/notoserifdisplay-greek.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Το αρχείο με όλα τα στυλ -->
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- ΕΙΣΑΓΩΓΗ: οθόνη με το λογότυπο που εμφανίζεται 1 φορά στην αρχή και μετά φεύγει προς τα πάνω (δείτε main.js και styles.css) -->
 <div class="intro" id="intro" aria-hidden="true"><img src="images/logo.png" alt="" width="1691" height="956"></div>
 
+<!-- Σύνδεσμος για χρήστες πληκτρολογίου/αναγνώστη οθόνης: πηγαίνει κατευθείαν στη φόρμα -->
 <a class="skip" href="#contact">Μετάβαση στη φόρμα επικοινωνίας</a>
+<!-- Λεπτή γραμμή προόδου κύλισης στο πάνω μέρος της σελίδας -->
 <div class="progress" aria-hidden="true"></div>
 
-<!-- shared illustration scene for the before/after slider -->
+<!-- ΚΟΙΝΗ ΕΙΚΟΝΟΓΡΑΦΗΣΗ για το slider «Πριν / Μετά» (ενότητα «Η διαφορά»).
+     Ορίζεται μία φορά εδώ και χρησιμοποιείται δύο φορές με <use href="#street">: μία "σβηστή" (πριν) και μία "αναμμένη" (μετά).
+     Περιέχει τρία κτίρια με παράθυρα (τα ορθογώνια με κλάση "w"). -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+        <!-- Φόντο ουρανού και ήλιος -->
         <symbol id="street" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice">
           <rect width="960" height="420" class="f-pale"/>
           <circle cx="840" cy="70" r="30" class="f-mid"/>
+          <!-- Κτίριο 1 (αριστερά) και τα παράθυρά του -->
           <rect class="f-bone s" x="60" y="120" width="220" height="260"/><rect class="w s" style="--k:0" x="82" y="144" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:5" x="150" y="144" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:10" x="218" y="144" width="40" height="36" rx="2"/>
@@ -36,6 +58,7 @@
           <rect class="w s" style="--k:1" x="82" y="294" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:6" x="150" y="294" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:0" x="218" y="294" width="40" height="36" rx="2"/>
+          <!-- Κτίριο 2 (στη μέση, ψηλό) και τα παράθυρά του -->
           <rect class="f-bone s" x="320" y="70" width="260" height="310"/><rect class="w s" style="--k:4" x="342" y="94" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:9" x="400" y="94" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:3" x="458" y="94" width="40" height="36" rx="2"/>
@@ -56,6 +79,7 @@
           <rect class="w s" style="--k:1" x="400" y="294" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:6" x="458" y="294" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:0" x="516" y="294" width="40" height="36" rx="2"/>
+          <!-- Κτίριο 3 (δεξιά) και τα παράθυρά του -->
           <rect class="f-bone s" x="620" y="150" width="260" height="230"/><rect class="w s" style="--k:2" x="642" y="174" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:7" x="700" y="174" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:1" x="758" y="174" width="40" height="36" rx="2"/>
@@ -72,16 +96,20 @@
           <rect class="w s" style="--k:1" x="700" y="324" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:6" x="758" y="324" width="40" height="36" rx="2"/>
           <rect class="w s" style="--k:0" x="816" y="324" width="40" height="36" rx="2"/>
+          <!-- Έδαφος και δέντρα -->
           <rect y="380" width="960" height="40" class="f-sage"/>
           <path class="s" d="M0 380h960"/>
           <circle cx="30" cy="360" r="26" class="f-sage s"/><circle cx="930" cy="364" r="22" class="f-sage s"/>
         </symbol>
 </defs></svg>
 
+<!-- ΕΠΑΝΩ ΜΠΑΡΑ: λογότυπο αριστερά, μενού δεξιά. Μένει σταθερή στην κορυφή (position: fixed) -->
 <header class="top" id="top-bar">
+  <!-- Λογότυπο: κλικ = επιστροφή στην κορυφή. Αντικαθιστάτε το images/logo.png με νεότερη έκδοση όταν χρειαστεί -->
   <a class="mark" href="#top" aria-label="Rev Estates, αρχική">
     <img class="logo" src="images/logo.png" alt="Rev Estates" width="1691" height="956">
   </a>
+  <!-- Μενού: κάθε σύνδεσμος πηγαίνει στην ενότητα με το αντίστοιχο id. Το data-nav χρησιμοποιεί το main.js για να υπογραμμίζει την τρέχουσα ενότητα -->
   <nav class="nav" aria-label="Κύρια πλοήγηση">
     <a href="#about" data-nav="about">Σχετικά</a>
     <a href="#services" data-nav="services">Υπηρεσίες</a>
@@ -89,38 +117,50 @@
     <a href="#difference" data-nav="difference">Η διαφορά</a>
     <a href="#properties" data-nav="properties">Ακίνητα</a>
     <a href="#faq" data-nav="faq">Ερωτήσεις</a>
+    <!-- Το κουμπί "Επικοινωνία" (το μόνο που μένει στο κινητό) -->
     <a class="nav__cta" href="#contact">Επικοινωνία</a>
   </nav>
 </header>
 
+<!-- ΚΥΡΙΟ ΠΕΡΙΕΧΟΜΕΝΟ -->
 <main id="top">
 
+  <!-- ΕΝΟΤΗΤΑ 1: HERO (πρώτη οθόνη) — τίτλος, κείμενο, κουμπί, και φόντο (βίντεο ή κινούμενο φόντο) -->
   <section class="hero" aria-labelledby="hero-title">
-    <!-- HERO MEDIA: drop a looping, silent video at video/hero.mp4 (+ optional video/hero.webm) and a still at images/hero-poster.jpg.
-         Until then the animated dark background below shows. -->
+    <!-- ΦΟΝΤΟ ΤΟΥ HERO.
+         Για να βάλετε βίντεο: τοποθετήστε ένα βίντεο χωρίς ήχο στο video/hero.mp4 (προαιρετικά και video/hero.webm)
+         και μια φωτογραφία του στο images/hero-poster.jpg. Μέχρι τότε φαίνεται το σκούρο κινούμενο φόντο παρακάτω. -->
+    <!-- Κινούμενο σκούρο φόντο (τρεις θολοί κύκλοι χρώματος) που φαίνεται όσο δεν υπάρχει βίντεο -->
     <div class="hero__bg" aria-hidden="true"><i></i><i></i><i></i></div>
+    <!-- Το βίντεο: παίζει αυτόματα, χωρίς ήχο, σε loop. Το main.js το αφαιρεί σε μικρές οθόνες, με εξοικονόμηση δεδομένων ή reduced-motion -->
     <video class="hero__video" id="hero-video" autoplay muted loop playsinline preload="metadata" poster="images/hero-poster.jpg" aria-hidden="true" tabindex="-1">
       <source src="video/hero.webm" type="video/webm">
       <source src="video/hero.mp4" type="video/mp4">
     </video>
+    <!-- Σκούρο επίστρωμα πάνω από το βίντεο, ώστε να διαβάζεται ο τίτλος -->
     <div class="hero__shade" aria-hidden="true"></div>
+    <!-- Το περιεχόμενο του hero (κινείται λίγο στο scroll, από το main.js) -->
     <div class="hero__inner" id="hero-inner">
+      <!-- Ο κύριος τίτλος: κάθε γραμμή είναι δύο ένθετα span, ώστε να "ανεβαίνει" μέσα από μάσκα. ΑΛΛΑΞΤΕ ΕΔΩ το κείμενο -->
       <h1 id="hero-title">
         <span class="line"><span>Το ακίνητό σας,</span></span>
         <span class="line line--accent"><span>σε ασφαλή χέρια.</span></span>
       </h1>
+      <!-- Υπότιτλος και κουμπί -->
       <div class="hero__row">
         <p class="hero__lead">Αναλαμβάνουμε τη διαχείριση της βραχυχρόνιας μίσθωσης του σπιτιού σας, ώστε να μη χρειάζεται να είστε εσείς εκεί.</p>
         <a class="btn btn--light" href="#contact">Στείλτε μήνυμα <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
       </div>
     </div>
+    <!-- Ένδειξη "Κύλιση" κάτω αριστερά (κρύβεται μόλις κυλήσετε) -->
     <a class="cue" href="#about" id="cue" aria-label="Κύλιση προς τα κάτω">
       <span>Κύλιση</span>
       <svg viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M2 15l6 6 6-6"/></svg>
     </a>
   </section>
 
-  <!-- MARQUEE: placeholder words, edit freely -->
+  <!-- ΛΩΡΙΔΑ ΜΕ ΛΕΞΕΙΣ που κινείται συνεχώς. Οι λέξεις είναι ΠΡΟΣΩΡΙΝΕΣ (αλλάξτε τις ελεύθερα).
+       Η σειρά επαναλαμβάνεται δύο φορές ώστε η κίνηση να μη "κόβεται" (loop). Αν δεν τη θέλετε, σβήστε όλο αυτό το div. -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
       <span>Υποδοχή</span><i></i><span>Καθαριότητα</span><i></i><span>Συντήρηση</span><i></i><span>Τιμολόγηση</span><i></i><span>Επικοινωνία</span><i></i>
@@ -128,29 +168,39 @@
     </div>
   </div>
 
-  <!-- Illustrations are authored SVG placeholders for photos: swap any <svg class="ill"> for <img src alt> -->
+  <!-- ΣΗΜΕΙΩΣΗ ΓΙΑ ΤΙΣ ΕΙΚΟΝΕΣ: οι εικονογραφήσεις παρακάτω (στοιχεία <svg class="ill">) είναι προσωρινές, ώστε να υπάρχει κάτι στη θέση των φωτογραφιών.
+       Για να βάλετε δική σας φωτογραφία, αντικαταστήστε ολόκληρο το <svg class="ill">...</svg> με:  <img src="images/ονομα.jpg" alt="περιγραφή"> -->
 
-  <!-- KEY AND LOCK: scroll-driven scene. The key slides in, turns, the doors open, then the page continues. Text is a placeholder. -->
+  <!-- ΣΚΗΝΗ «ΚΛΕΙΔΙ ΚΑΙ ΚΛΕΙΔΑΡΙΑ» (ελέγχεται από το scroll, βλέπε main.js → updateLock και styles.css → ".lock").
+       Κυλώντας: το κλειδί μπαίνει στην κλειδαριά → γυρίζει → ανοίγουν οι δύο πόρτες → φαίνεται το κείμενο από πίσω → η σελίδα συνεχίζει.
+       Χωρίς JavaScript φαίνεται μόνο το κείμενο στη μέση. Ο τίτλος και το κείμενο είναι ΠΡΟΣΩΡΙΝΑ. -->
   <section class="lock" id="lock" aria-labelledby="lock-title">
+    <!-- Η "κολλητή" σκηνή που μένει στην οθόνη όσο διαρκεί η κίνηση -->
     <div class="lock__stick">
+      <!-- Το μήνυμα που αποκαλύπτεται όταν ανοίξουν οι πόρτες -->
       <div class="lock__reveal">
         <h2 id="lock-title" class="lock__title">Παραδώστε μας το κλειδί.</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
+      <!-- Τα δύο φύλλα της πόρτας (αριστερό και δεξί) -->
       <div class="lock__door lock__door--l" aria-hidden="true"></div>
       <div class="lock__door lock__door--r" aria-hidden="true"></div>
+      <!-- Το γραφικό της κλειδαριάς και του κλειδιού (σχέδιο SVG): πλάκα, κύλινδρος, κλειδί -->
       <svg class="lock__svg" viewBox="0 0 1000 600" aria-hidden="true" focusable="false">
+        <!-- Η στρογγυλή πλάκα της κλειδαριάς με 4 βίδες -->
         <g class="plate">
           <circle cx="500" cy="300" r="172" class="plate__disc"/>
           <circle cx="500" cy="300" r="146" class="plate__ring"/>
           <circle cx="500" cy="136" r="7" class="plate__screw"/><circle cx="500" cy="464" r="7" class="plate__screw"/>
           <circle cx="336" cy="300" r="7" class="plate__screw"/><circle cx="664" cy="300" r="7" class="plate__screw"/>
         </g>
+        <!-- Ο κύλινδρος με την τρύπα του κλειδιού (γυρίζει μαζί με το κλειδί) -->
         <g class="cyl">
           <circle cx="500" cy="300" r="82" class="cyl__disc"/>
           <circle cx="500" cy="290" r="14" class="cyl__hole"/>
           <path d="M493 298h14l6 34h-26z" class="cyl__hole"/>
         </g>
+        <!-- Το κλειδί (κινείται και γυρίζει με το scroll) -->
         <g class="lk">
           <g transform="translate(500 300) rotate(-45)">
             <path class="key__body" fill-rule="evenodd" d="M-258 -7h256a7 7 0 0 1 0 14h-256zM-262 0a40 40 0 1 0 -80 0a40 40 0 1 0 80 0zM-317 0a15 15 0 1 0 30 0a15 15 0 1 0 -30 0z"/>
@@ -158,19 +208,22 @@
           </g>
         </g>
       </svg>
+      <!-- Η ένδειξη "Κυλήστε" στην αρχή της σκηνής -->
       <span class="lock__hint" aria-hidden="true">Κυλήστε</span>
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ΕΝΟΤΗΤΑ «ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ»: εικόνα αριστερά, κείμενο δεξιά. Το κείμενο είναι lorem ipsum, αντικαταστήστε το -->
   <section class="sec sec--tint" id="about" aria-labelledby="about-title">
     <div class="wrap split">
+      <!-- Εικόνα (--r = λόγος διαστάσεων πλάτος/ύψος). Εικονογράφηση: πρόσοψη κτιρίου όπου ανάβουν τα παράθυρα -->
       <figure class="media" style="--r: 4 / 5">
         <svg class="ill" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: πρόσοψη κτιρίου με φωτισμένα παράθυρα">
           <rect width="400" height="500" class="f-pale"/>
           <circle cx="322" cy="92" r="34" class="f-mid"/>
           <rect x="70" y="112" width="260" height="338" class="f-bone s"/>
           <rect x="58" y="98" width="284" height="16" class="f-ink"/>
+          <!-- Παράθυρα (κλάση "w"): το --k ορίζει τη σειρά με την οποία ανάβουν -->
           <rect class="w s" style="--k:0" x="98" y="140" width="50" height="46" rx="2"/>
           <rect class="w s" style="--k:5" x="175" y="140" width="50" height="46" rx="2"/>
           <rect class="w s" style="--k:10" x="252" y="140" width="50" height="46" rx="2"/>
@@ -188,6 +241,7 @@
           <circle cx="36" cy="424" r="30" class="f-sage s"/><circle cx="366" cy="428" r="26" class="f-sage s"/>
         </svg>
       </figure>
+      <!-- Κείμενο της ενότητας. Η κλάση "reveal" = εμφανίζεται με animation· το --d ορίζει τη σειρά/καθυστέρηση -->
       <div class="split__text">
         <h2 id="about-title" class="reveal">Σχετικά με εμάς</h2>
         <p class="reveal" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -197,12 +251,13 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- ΕΝΟΤΗΤΑ «ΥΠΗΡΕΣΙΕΣ»: λίστα αριστερά, εικόνα δεξιά (η εικόνα μένει στη θέση της όσο κυλάτε). Τα κείμενα είναι lorem ipsum -->
   <section class="sec" id="services" aria-labelledby="services-title">
     <div class="wrap split split--flip">
       <div class="split__text">
         <h2 id="services-title" class="reveal">Υπηρεσίες</h2>
         <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <!-- Λίστα υπηρεσιών: αντιγράψτε ένα <li> για να προσθέσετε άλλη υπηρεσία. Το "01" είναι διακοσμητικό -->
         <ol class="list">
           <li class="reveal" style="--d:1"><span class="list__n" aria-hidden="true">01</span><div><h3>Τίτλος υπηρεσίας</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p></div></li>
           <li class="reveal" style="--d:2"><span class="list__n" aria-hidden="true">02</span><div><h3>Τίτλος υπηρεσίας</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p></div></li>
@@ -210,6 +265,7 @@
           <li class="reveal" style="--d:4"><span class="list__n" aria-hidden="true">04</span><div><h3>Τίτλος υπηρεσίας</h3><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p></div></li>
         </ol>
       </div>
+      <!-- Εικονογράφηση: καθιστικό (ανάβει το φωτιστικό και λικνίζεται το φυτό) -->
       <figure class="media media--sticky" style="--r: 4 / 5">
         <svg class="ill" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: καθιστικό με καναπέ και φωτιστικό">
           <rect width="400" height="500" class="f-bone"/>
@@ -238,10 +294,11 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
+  <!-- ΕΝΟΤΗΤΑ «ΠΩΣ ΔΟΥΛΕΥΟΥΜΕ»: πλατιά εικόνα και τρία βήματα από κάτω -->
   <section class="sec sec--tint" id="process" aria-labelledby="process-title">
     <div class="wrap">
       <h2 id="process-title" class="reveal">Πώς δουλεύουμε</h2>
+      <!-- Πλατιά εικονογράφηση: παραθαλάσσιο χωριό (ανεβαίνει ο ήλιος, μπαίνει η βάρκα, ζωγραφίζονται τα κύματα) -->
       <figure class="media media--wide" style="--r: 21 / 9">
         <svg class="ill" viewBox="0 0 840 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: παραθαλάσσιο χωριό με λευκά σπίτια, ήλιο και βάρκα">
           <rect width="840" height="360" class="f-pale"/>
@@ -249,11 +306,14 @@
           <rect y="270" width="840" height="90" class="f-mid"/>
           <path class="s wave" pathLength="1" d="M0 296q30-10 60 0t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
           <path class="s wave" pathLength="1" d="M0 326q30-10 60 0t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+          <!-- Ο λόφος και τα σπίτια πάνω του -->
           <path class="f-sage" d="M0 290V244C80 234 160 206 260 152 340 112 420 100 520 130 600 156 700 200 840 216V290z"/>
           <rect class="f-bone s" x="250" y="150" width="44" height="38"/><rect class="f-sage-d" x="267" y="167" width="11" height="21"/><path class="f-sage-d s" d="M259 150a13 13 0 0 1 26 0z"/><rect class="f-bone s" x="302" y="128" width="42" height="38"/><rect class="f-sage-d" x="318" y="145" width="10" height="21"/><rect class="f-bone s" x="352" y="114" width="48" height="40"/><rect class="f-sage-d" x="370" y="132" width="12" height="22"/><path class="f-sage-d s" d="M362 114a14 14 0 0 1 29 0z"/><rect class="f-bone s" x="408" y="108" width="44" height="38"/><rect class="f-sage-d" x="425" y="125" width="11" height="21"/><rect class="f-bone s" x="458" y="116" width="46" height="40"/><rect class="f-sage-d" x="475" y="134" width="11" height="22"/><rect class="f-bone s" x="512" y="136" width="44" height="38"/><rect class="f-sage-d" x="529" y="153" width="11" height="21"/><path class="f-sage-d s" d="M521 136a13 13 0 0 1 26 0z"/><rect class="f-bone s" x="566" y="152" width="46" height="40"/><rect class="f-sage-d" x="583" y="170" width="11" height="22"/><rect class="f-bone s" x="620" y="168" width="44" height="38"/><rect class="f-sage-d" x="637" y="185" width="11" height="21"/><rect class="f-bone s" x="676" y="182" width="48" height="40"/><rect class="f-sage-d" x="694" y="200" width="12" height="22"/><path class="f-sage-d s" d="M686 182a14 14 0 0 1 29 0z"/><rect class="f-bone s" x="150" y="200" width="44" height="38"/><rect class="f-sage-d" x="167" y="217" width="11" height="21"/><rect class="f-bone s" x="100" y="222" width="42" height="36"/><rect class="f-sage-d" x="116" y="238" width="10" height="20"/><path class="f-sage-d s" d="M108 222a13 13 0 0 1 25 0z"/><rect class="f-bone s" x="200" y="176" width="42" height="36"/><rect class="f-sage-d" x="216" y="192" width="10" height="20"/>
+          <!-- Η βάρκα -->
           <g class="boat"><path class="f-ink" d="M690 300h70l-12 18h-46z"/><path class="f-bone s" d="M722 296V240l32 56z"/></g>
         </svg>
       </figure>
+      <!-- Τα τρία βήματα. Οι αριθμοί 1, 2, 3 είναι σκόπιμοι (δείχνουν σειρά) -->
       <ol class="steps">
         <li class="reveal" style="--d:0"><span class="steps__n" aria-hidden="true">1</span><h3>Τίτλος βήματος</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p></li>
         <li class="reveal" style="--d:1"><span class="steps__n" aria-hidden="true">2</span><h3>Τίτλος βήματος</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p></li>
@@ -262,28 +322,33 @@
     </div>
   </section>
 
-  <!-- BEFORE / AFTER -->
+  <!-- ΕΝΟΤΗΤΑ «Η ΔΙΑΦΟΡΑ»: slider Πριν / Μετά (σύρετε με το ποντίκι ή το δάχτυλο, ή με τα βελάκια του πληκτρολογίου) -->
   <section class="sec" id="difference" aria-labelledby="difference-title">
     <div class="wrap">
       <h2 id="difference-title" class="reveal">Η διαφορά</h2>
       <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Σύρετε για να δείτε πριν και μετά.</p>
+      <!-- Το --p είναι η θέση του διαχωριστικού (50% = στη μέση). Το main.js το ενημερώνει -->
       <div class="cmp" id="cmp" style="--p: 50%">
         <svg class="cmp__layer cmp__after" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
         <svg class="cmp__layer cmp__before" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
+        <!-- Ετικέτες Πριν / Μετά -->
         <span class="cmp__tag cmp__tag--b" aria-hidden="true">Πριν</span>
         <span class="cmp__tag cmp__tag--a" aria-hidden="true">Μετά</span>
+        <!-- Η κάθετη γραμμή με τον στρογγυλό δείκτη -->
         <span class="cmp__bar" aria-hidden="true"><span class="cmp__knob"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
+        <!-- Αόρατο ρυθμιστικό (range) από πάνω: δέχεται το σύρσιμο και κάνει το slider προσβάσιμο -->
         <input class="cmp__range" id="cmp-range" type="range" min="0" max="100" value="50" aria-label="Σύγκριση πριν και μετά">
       </div>
     </div>
   </section>
 
-  <!-- PROPERTIES -->
+  <!-- ΕΝΟΤΗΤΑ «ΑΚΙΝΗΤΑ»: γκαλερί με τρεις εικόνες διαφορετικού μεγέθους και λεζάντες. Αντικαταστήστε τις με φωτογραφίες ακινήτων -->
   <section class="sec sec--tint" id="properties" aria-labelledby="properties-title">
     <div class="wrap">
       <h2 id="properties-title" class="reveal">Ακίνητα</h2>
       <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
       <div class="gallery">
+        <!-- Εικόνα 1 (ψηλή): πολυκατοικία με μπαλκόνια -->
         <figure class="gallery__a">
           <div class="media" style="--r: 3 / 4">
             <svg class="ill" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: πολυκατοικία με μπαλκόνια">
@@ -306,6 +371,7 @@
           </div>
           <figcaption>Τίτλος ακινήτου · Lorem ipsum</figcaption>
         </figure>
+        <!-- Εικόνα 2 (πλατιά): βίλα με πισίνα -->
         <figure class="gallery__b">
           <div class="media" style="--r: 4 / 3">
             <svg class="ill" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: βίλα με πισίνα">
@@ -325,6 +391,7 @@
           </div>
           <figcaption>Τίτλος ακινήτου · Lorem ipsum</figcaption>
         </figure>
+        <!-- Εικόνα 3 (τετράγωνη): σπίτι με κλειδί στην πόρτα -->
         <figure class="gallery__c">
           <div class="media" style="--r: 1 / 1">
             <svg class="ill" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: σπίτι με κλειδί στην πόρτα">
@@ -343,22 +410,24 @@
     </div>
   </section>
 
-  <!-- QUOTE -->
+  <!-- ΣΚΟΥΡΗ ΖΩΝΗ: γνώμη πελάτη (προσωρινό κείμενο). Οι λέξεις εμφανίζονται μία-μία και τα εισαγωγικά "ζωγραφίζονται" -->
   <section class="sec sec--dark sec--quote" aria-label="Απόψεις">
     <div class="wrap wrap--narrow">
       <svg class="qmark" viewBox="0 0 64 48" aria-hidden="true"><path pathLength="1" d="M4 44V24C4 12 10 6 22 4M36 44V24c0-12 6-18 18-20"/></svg>
       <blockquote class="quote">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <!-- Όνομα και ιδιότητα αυτού που μιλά (βάλτε πραγματικά στοιχεία, μόνο με την άδειά του) -->
         <footer>Όνομα Επώνυμο · Ιδιότητα</footer>
       </blockquote>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ΕΝΟΤΗΤΑ «ΣΥΧΝΕΣ ΕΡΩΤΗΣΕΙΣ»: ανοιγοκλειόμενες απαντήσεις (accordion). Κάθε ερώτηση είναι ένα κουμπί· το main.js αλλάζει το aria-expanded -->
   <section class="sec" id="faq" aria-labelledby="faq-title">
     <div class="wrap faq">
       <h2 id="faq-title" class="reveal">Συχνές ερωτήσεις</h2>
       <div class="acc" id="acc">
+        <!-- Μία ερώτηση + απάντηση. Για νέα ερώτηση αντιγράψτε το block και αλλάξτε τα id (b1/p1 → b5/p5) -->
         <div class="acc__item reveal" style="--d:1">
           <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="p1" id="b1">Lorem ipsum dolor sit amet;<span class="acc__ic" aria-hidden="true"></span></button></h3>
           <div class="acc__panel" id="p1" role="region" aria-labelledby="b1"><div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div></div>
@@ -379,13 +448,15 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- ΕΝΟΤΗΤΑ «ΕΠΙΚΟΙΝΩΝΙΑ»: τίτλος και στοιχεία αριστερά, φόρμα δεξιά -->
   <section class="sec sec--tint" id="contact" aria-labelledby="contact-title">
     <div class="wrap contact">
       <div class="contact__intro">
         <h2 id="contact-title" class="reveal">Πείτε μας για το ακίνητό σας</h2>
         <p class="reveal lead-p" style="--d:1">Συμπληρώστε τη φόρμα και θα επικοινωνήσουμε μαζί σας.</p>
+        <!-- ΒΑΛΤΕ ΕΔΩ τα πραγματικά στοιχεία επικοινωνίας (τηλέφωνο, email, διεύθυνση) -->
         <p class="reveal contact__info" style="--d:2">Στοιχεία επικοινωνίας: lorem ipsum dolor sit amet.</p>
+        <!-- Σχέδιο κλειδιού: "ζωγραφίζεται" όταν φανεί, γέρνει όταν γράφετε στη φόρμα και γυρίζει όταν σταλεί το μήνυμα -->
         <svg class="key" id="key" viewBox="0 0 80 200" aria-hidden="true">
           <g>
             <circle pathLength="1" cx="40" cy="36" r="24"/>
@@ -395,37 +466,46 @@
         </svg>
       </div>
 
-      <!-- action is a placeholder: connect to the WordPress form handler (e.g. Contact Form 7) -->
+      <!-- ΦΟΡΜΑ ΕΠΙΚΟΙΝΩΝΙΑΣ.
+           Το action="#" είναι προσωρινό: στο WordPress αντικαθίσταται με τον χειριστή της φόρμας (π.χ. Contact Form 7).
+           Ο έλεγχος των πεδίων γίνεται από το main.js (novalidate = ο browser δεν δείχνει τα δικά του μηνύματα). -->
       <form id="contact-form" action="#" method="post" novalidate class="reveal" style="--d:1">
+        <!-- Πεδίο: Ονοματεπώνυμο (υποχρεωτικό). Το <p class="err"> είναι το μήνυμα λάθους, κρυφό μέχρι να χρειαστεί -->
         <div class="field">
           <label for="f-name">Ονοματεπώνυμο</label>
           <input id="f-name" name="name" type="text" autocomplete="name" required>
           <p class="err" id="e-name" hidden>Γράψτε το όνομά σας.</p>
         </div>
+        <!-- Πεδίο: Τηλέφωνο (υποχρεωτικό, τουλάχιστον 8 ψηφία) -->
         <div class="field">
           <label for="f-phone">Τηλέφωνο</label>
           <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
           <p class="err" id="e-phone" hidden>Γράψτε ένα τηλέφωνο για να σας καλέσουμε.</p>
         </div>
+        <!-- Πεδίο: Email (προαιρετικό, αλλά αν γραφτεί πρέπει να είναι σωστό) -->
         <div class="field">
           <label for="f-email">Email <span class="opt">(προαιρετικό)</span></label>
           <input id="f-email" name="email" type="email" autocomplete="email">
           <p class="err" id="e-email" hidden>Το email δεν φαίνεται σωστό.</p>
         </div>
+        <!-- Πεδίο: Περιοχή του ακινήτου (υποχρεωτικό) -->
         <div class="field">
           <label for="f-area">Περιοχή του ακινήτου</label>
           <input id="f-area" name="area" type="text" required>
           <p class="err" id="e-area" hidden>Πείτε μας πού βρίσκεται το ακίνητο.</p>
         </div>
+        <!-- Πεδίο: Μήνυμα (προαιρετικό, σε όλο το πλάτος) -->
         <div class="field field--wide">
           <label for="f-msg">Μήνυμα <span class="opt">(προαιρετικό)</span></label>
           <textarea id="f-msg" name="message" rows="3"></textarea>
         </div>
+        <!-- Συγκατάθεση GDPR: χωρίς αυτήν δεν στέλνεται η φόρμα. Προσαρμόστε το κείμενο με τη νομική σας πολιτική -->
         <div class="field field--wide consent">
           <input id="f-consent" name="consent" type="checkbox" required>
           <label for="f-consent">Συμφωνώ να χρησιμοποιήσετε τα στοιχεία μου για να επικοινωνήσετε μαζί μου σχετικά με αυτό το αίτημα.</label>
           <p class="err" id="e-consent" hidden>Χρειάζεται η συγκατάθεσή σας για να στείλουμε το μήνυμα.</p>
         </div>
+        <!-- Κουμπί αποστολής και μήνυμα κατάστασης (π.χ. "Λάβαμε το μήνυμά σας") -->
         <div class="field--wide actions">
           <button class="btn btn--send" type="submit">Αποστολή μηνύματος</button>
           <p class="status" id="form-status" role="status" aria-live="polite"></p>
@@ -436,6 +516,7 @@
 
 </main>
 
+<!-- ΥΠΟΣΕΛΙΔΟ: λογότυπο, πνευματικά δικαιώματα και ένα προσωρινό κείμενο (π.χ. σύνδεσμοι πολιτικής απορρήτου) -->
 <footer class="foot">
   <div class="wrap foot__in">
     <img class="logo logo--foot" src="images/logo.png" alt="Rev Estates" width="1691" height="956" loading="lazy">
@@ -444,6 +525,7 @@
   </div>
 </footer>
 
+<!-- Ο κώδικας συμπεριφοράς (animations, φόρμα, μενού). Φορτώνει τελευταίος, ώστε να υπάρχουν ήδη όλα τα στοιχεία της σελίδας -->
 <script src="main.js"></script>
 </body>
 </html>
