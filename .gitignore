@@ -1,0 +1,6 @@
+# local tool state, not part of the website
+.impeccable/
+.claude/
+.codex/
+.agents/
+skills-lock.json
