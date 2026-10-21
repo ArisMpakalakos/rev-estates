@@ -4,3 +4,6 @@
 .codex/
 .agents/
 skills-lock.json
+
+# το zip του θέματος φτιάχνεται ξανά με: python wordpress/build_theme.py
+wordpress/rev-estates.zip

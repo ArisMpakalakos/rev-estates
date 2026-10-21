@@ -143,7 +143,8 @@
     if (bar && max > 0) bar.style.transform = 'scaleX(' + Math.min(y / max, 1) + ')';
 
     // Η επάνω μπάρα παίρνει φόντο όταν κατεβείτε λίγο (κλάση "is-stuck").
-    if (head) head.classList.toggle('is-stuck', y > 24);
+    // Στις εσωτερικές σελίδες του WordPress έχει το χαρακτηριστικό data-solid και έχει πάντα φόντο.
+    if (head) head.classList.toggle('is-stuck', y > 24 || head.hasAttribute('data-solid'));
 
     // Η ένδειξη "Κύλιση" κρύβεται μόλις αρχίσει η κύλιση.
     if (cue) cue.classList.toggle('is-gone', y > 60);
@@ -308,15 +309,33 @@
     status.className = 'status';
     status.textContent = 'Αποστολή…';
 
-    // TODO: αντικαταστήστε αυτό το κομμάτι με τον πραγματικό χειριστή φόρμας του WordPress
-    // (π.χ. Contact Form 7 ή admin-ajax). Τώρα απλώς προσομοιώνει επιτυχία μετά από 0,7 δευτερόλεπτα.
-    setTimeout(function () {
+    // Τελική ενέργεια μετά την αποστολή: ok = επιτυχία ή όχι, msg = μήνυμα προς τον επισκέπτη.
+    var finish = function (ok, msg) {
       btn.disabled = false;
-      form.reset();                                          // καθαρίζει τα πεδία
-      status.className = 'status ok';
-      status.textContent = 'Λάβαμε το μήνυμά σας. Θα επικοινωνήσουμε σύντομα.';
-      var key = document.getElementById('key');              // το κλειδί στην ενότητα Επικοινωνία "γυρίζει" ως επιβεβαίωση
-      if (key) key.classList.add('turned');
-    }, 700);
+      if (ok) {
+        form.reset();                                        // καθαρίζει τα πεδία
+        status.className = 'status ok';
+        status.textContent = msg || 'Λάβαμε το μήνυμά σας. Θα επικοινωνήσουμε σύντομα.';
+        var key = document.getElementById('key');            // το κλειδί στην ενότητα Επικοινωνία "γυρίζει" ως επιβεβαίωση
+        if (key) key.classList.add('turned');
+      } else {
+        status.className = 'status bad';
+        status.textContent = msg || 'Κάτι πήγε στραβά. Δοκιμάστε ξανά σε λίγο.';
+      }
+    };
+
+    // Στο WordPress το θέμα ορίζει το window.revEstates (με τη διεύθυνση admin-ajax.php): τότε η φόρμα στέλνεται πραγματικά.
+    // Αλλιώς (π.χ. άνοιγμα του index.html τοπικά) προσομοιώνουμε επιτυχία μετά από 0,7 δευτερόλεπτα.
+    var cfg = window.revEstates || null;
+    if (cfg && cfg.ajaxUrl) {
+      var data = new FormData(form);                         // όλα τα πεδία της φόρμας
+      data.append('action', 'rev_contact');                  // το όνομα της ενέργειας στο functions.php
+      fetch(cfg.ajaxUrl, { method: 'POST', body: data, credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { finish(!!j.success, j.data && j.data.message); })
+        .catch(function () { finish(false); });
+    } else {
+      setTimeout(function () { finish(true); }, 700);
+    }
   });
 })();

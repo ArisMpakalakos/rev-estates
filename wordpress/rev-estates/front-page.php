@@ -1,0 +1,408 @@
+<?php
+/**
+ * front-page.php — η αρχική σελίδα (όλο το site είναι μία σελίδα).
+ * Για να αλλάξετε κείμενα, επεξεργαστείτε αυτό το αρχείο (Εμφάνιση → Επεξεργαστής αρχείων θέματος).
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+get_header();
+?>
+
+<?php /* ΚΥΡΙΟ ΠΕΡΙΕΧΟΜΕΝΟ */ ?>
+<main id="top">
+
+  <?php /* ΕΝΟΤΗΤΑ 1: HERO (πρώτη οθόνη) — τίτλος, κείμενο, κουμπί, και φόντο (βίντεο ή κινούμενο φόντο) */ ?>
+  <section class="hero" aria-labelledby="hero-title">
+    <?php /* ΦΟΝΤΟ ΤΟΥ HERO.
+         Για να βάλετε βίντεο: Εμφάνιση → Προσαρμογή → Rev Estates → «Βίντεο hero» (και προαιρετικά «Φωτογραφία hero»).
+         Μέχρι τότε φαίνεται το σκούρο κινούμενο φόντο παρακάτω. */ ?>
+    <?php /* Κινούμενο σκούρο φόντο (τρεις θολοί κύκλοι χρώματος) που φαίνεται όσο δεν υπάρχει βίντεο */ ?>
+    <div class="hero__bg" aria-hidden="true"><i></i><i></i><i></i></div>
+    <?php $rev_media = rev_hero_media(); ?>
+    <?php if ( $rev_media['video'] ) : ?>
+    <?php /* Το βίντεο: παίζει αυτόματα, χωρίς ήχο, σε loop. Το main.js το αφαιρεί σε μικρές οθόνες, με εξοικονόμηση δεδομένων ή reduced-motion */ ?>
+    <video class="hero__video" id="hero-video" autoplay muted loop playsinline preload="metadata"<?php if ( $rev_media['poster'] ) : ?> poster="<?php echo esc_url( $rev_media['poster'] ); ?>"<?php endif; ?> aria-hidden="true" tabindex="-1">
+      <source src="<?php echo esc_url( $rev_media['video'] ); ?>" type="<?php echo esc_attr( $rev_media['type'] ); ?>">
+    </video>
+    <?php endif; ?>
+    <?php /* Σκούρο επίστρωμα πάνω από το βίντεο, ώστε να διαβάζεται ο τίτλος */ ?>
+    <div class="hero__shade" aria-hidden="true"></div>
+    <?php /* Το περιεχόμενο του hero (κινείται λίγο στο scroll, από το main.js) */ ?>
+    <div class="hero__inner" id="hero-inner">
+      <?php /* Ο κύριος τίτλος: κάθε γραμμή είναι δύο ένθετα span, ώστε να "ανεβαίνει" μέσα από μάσκα. ΑΛΛΑΞΤΕ ΕΔΩ το κείμενο */ ?>
+      <h1 id="hero-title">
+        <span class="line"><span>Το ακίνητό σας,</span></span>
+        <span class="line line--accent"><span>σε ασφαλή χέρια.</span></span>
+      </h1>
+      <?php /* Υπότιτλος και κουμπί */ ?>
+      <div class="hero__row">
+        <p class="hero__lead">Αναλαμβάνουμε τη διαχείριση της βραχυχρόνιας μίσθωσης του σπιτιού σας, ώστε να μη χρειάζεται να είστε εσείς εκεί.</p>
+        <a class="btn btn--light" href="#contact">Στείλτε μήνυμα <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <?php /* Ένδειξη "Κύλιση" κάτω αριστερά (κρύβεται μόλις κυλήσετε) */ ?>
+    <a class="cue" href="#about" id="cue" aria-label="Κύλιση προς τα κάτω">
+      <span>Κύλιση</span>
+      <svg viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M2 15l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <?php /* ΛΩΡΙΔΑ ΜΕ ΛΕΞΕΙΣ που κινείται συνεχώς. Οι λέξεις είναι ΠΡΟΣΩΡΙΝΕΣ (αλλάξτε τις ελεύθερα).
+       Η σειρά επαναλαμβάνεται δύο φορές ώστε η κίνηση να μη "κόβεται" (loop). Αν δεν τη θέλετε, σβήστε όλο αυτό το div. */ ?>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Υποδοχή</span><i></i><span>Καθαριότητα</span><i></i><span>Συντήρηση</span><i></i><span>Τιμολόγηση</span><i></i><span>Επικοινωνία</span><i></i>
+      <span>Υποδοχή</span><i></i><span>Καθαριότητα</span><i></i><span>Συντήρηση</span><i></i><span>Τιμολόγηση</span><i></i><span>Επικοινωνία</span><i></i>
+    </div>
+  </div>
+
+  <?php /* ΣΗΜΕΙΩΣΗ ΓΙΑ ΤΙΣ ΕΙΚΟΝΕΣ: οι εικονογραφήσεις παρακάτω (στοιχεία <svg class="ill">) είναι προσωρινές, ώστε να υπάρχει κάτι στη θέση των φωτογραφιών.
+       Για να βάλετε δική σας φωτογραφία, αντικαταστήστε ολόκληρο το <svg class="ill">...</svg> με:  <img src="images/ονομα.jpg" alt="περιγραφή"> */ ?>
+
+  <?php /* ΣΚΗΝΗ «ΚΛΕΙΔΙ ΚΑΙ ΚΛΕΙΔΑΡΙΑ» (ελέγχεται από το scroll, βλέπε main.js → updateLock και styles.css → ".lock").
+       Κυλώντας: το κλειδί μπαίνει στην κλειδαριά → γυρίζει → ανοίγουν οι δύο πόρτες → φαίνεται το κείμενο από πίσω → η σελίδα συνεχίζει.
+       Χωρίς JavaScript φαίνεται μόνο το κείμενο στη μέση. Ο τίτλος και το κείμενο είναι ΠΡΟΣΩΡΙΝΑ. */ ?>
+  <section class="lock" id="lock" aria-labelledby="lock-title">
+    <?php /* Η "κολλητή" σκηνή που μένει στην οθόνη όσο διαρκεί η κίνηση */ ?>
+    <div class="lock__stick">
+      <?php /* Το μήνυμα που αποκαλύπτεται όταν ανοίξουν οι πόρτες */ ?>
+      <div class="lock__reveal">
+        <h2 id="lock-title" class="lock__title">MOTO ΕΤΑΙΡΙΑΣ.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      <?php /* Τα δύο φύλλα της πόρτας (αριστερό και δεξί) */ ?>
+      <div class="lock__door lock__door--l" aria-hidden="true"></div>
+      <div class="lock__door lock__door--r" aria-hidden="true"></div>
+      <?php /* Το γραφικό της κλειδαριάς και του κλειδιού (σχέδιο SVG): πλάκα, κύλινδρος, κλειδί */ ?>
+      <svg class="lock__svg" viewBox="0 0 1000 600" aria-hidden="true" focusable="false">
+        <?php /* Η στρογγυλή πλάκα της κλειδαριάς με 4 βίδες */ ?>
+        <g class="plate">
+          <circle cx="500" cy="300" r="172" class="plate__disc"/>
+          <circle cx="500" cy="300" r="146" class="plate__ring"/>
+          <circle cx="500" cy="136" r="7" class="plate__screw"/><circle cx="500" cy="464" r="7" class="plate__screw"/>
+          <circle cx="336" cy="300" r="7" class="plate__screw"/><circle cx="664" cy="300" r="7" class="plate__screw"/>
+        </g>
+        <?php /* Ο κύλινδρος με την τρύπα του κλειδιού (γυρίζει μαζί με το κλειδί) */ ?>
+        <g class="cyl">
+          <circle cx="500" cy="300" r="82" class="cyl__disc"/>
+          <circle cx="500" cy="290" r="14" class="cyl__hole"/>
+          <path d="M493 298h14l6 34h-26z" class="cyl__hole"/>
+        </g>
+        <?php /* Το κλειδί (κινείται και γυρίζει με το scroll) */ ?>
+        <g class="lk">
+          <g transform="translate(500 300) rotate(-45)">
+            <path class="key__body" fill-rule="evenodd" d="M-258 -7h256a7 7 0 0 1 0 14h-256zM-262 0a40 40 0 1 0 -80 0a40 40 0 1 0 80 0zM-317 0a15 15 0 1 0 30 0a15 15 0 1 0 -30 0z"/>
+            <path class="key__body" d="M-58 7h14v22h-14zM-92 7h14v14h-14z"/>
+          </g>
+        </g>
+      </svg>
+      <?php /* Η ένδειξη "Κυλήστε" στην αρχή της σκηνής */ ?>
+      <span class="lock__hint" aria-hidden="true">Κυλήστε</span>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ»: εικόνα αριστερά, κείμενο δεξιά. Το κείμενο είναι lorem ipsum, αντικαταστήστε το */ ?>
+  <section class="sec sec--tint" id="about" aria-labelledby="about-title">
+    <div class="wrap split">
+      <?php /* Εικόνα (--r = λόγος διαστάσεων πλάτος/ύψος). Εικονογράφηση: πρόσοψη κτιρίου όπου ανάβουν τα παράθυρα */ ?>
+      <figure class="media" style="--r: 4 / 5">
+        <svg class="ill" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: πρόσοψη κτιρίου με φωτισμένα παράθυρα">
+          <rect width="400" height="500" class="f-pale"/>
+          <circle cx="322" cy="92" r="34" class="f-mid"/>
+          <rect x="70" y="112" width="260" height="338" class="f-bone s"/>
+          <rect x="58" y="98" width="284" height="16" class="f-ink"/>
+          <?php /* Παράθυρα (κλάση "w"): το --k ορίζει τη σειρά με την οποία ανάβουν */ ?>
+          <rect class="w s" style="--k:0" x="98" y="140" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:5" x="175" y="140" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:10" x="252" y="140" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:4" x="98" y="205" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:9" x="175" y="205" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:3" x="252" y="205" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:8" x="98" y="270" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:2" x="175" y="270" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:7" x="252" y="270" width="50" height="46" rx="2"/>
+          <rect class="w s" style="--k:1" x="98" y="380" width="56" height="52" rx="2"/>
+          <rect class="w s" style="--k:6" x="252" y="380" width="56" height="52" rx="2"/>
+          <path class="f-sage s" d="M175 450V402a25 25 0 0 1 50 0V450z"/>
+          <rect y="450" width="400" height="50" class="f-sage"/>
+          <path class="s" d="M0 450h400"/>
+          <circle cx="36" cy="424" r="30" class="f-sage s"/><circle cx="366" cy="428" r="26" class="f-sage s"/>
+        </svg>
+      </figure>
+      <?php /* Κείμενο της ενότητας. Η κλάση "reveal" = εμφανίζεται με animation· το --d ορίζει τη σειρά/καθυστέρηση */ ?>
+      <div class="split__text">
+        <h2 id="about-title" class="reveal">Σχετικά με εμάς</h2>
+        <p class="reveal" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="reveal" style="--d:2">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a class="link reveal" style="--d:3" href="#contact">Επικοινωνήστε μαζί μας <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΥΠΗΡΕΣΙΕΣ»: λίστα αριστερά, εικόνα δεξιά (η εικόνα μένει στη θέση της όσο κυλάτε). Τα κείμενα είναι lorem ipsum */ ?>
+  <section class="sec" id="services" aria-labelledby="services-title">
+    <div class="wrap split split--flip">
+      <div class="split__text">
+        <h2 id="services-title" class="reveal">Υπηρεσίες</h2>
+        <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <?php /* Λίστα υπηρεσιών: αντιγράψτε ένα <li> για να προσθέσετε άλλη υπηρεσία. Το "01" είναι διακοσμητικό */ ?>
+        <ol class="list">
+          <li class="reveal" style="--d:1"><span class="list__n" aria-hidden="true">01</span><div><h3>Τίτλος υπηρεσίας</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p></div></li>
+          <li class="reveal" style="--d:2"><span class="list__n" aria-hidden="true">02</span><div><h3>Τίτλος υπηρεσίας</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p></div></li>
+          <li class="reveal" style="--d:3"><span class="list__n" aria-hidden="true">03</span><div><h3>Τίτλος υπηρεσίας</h3><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p></div></li>
+          <li class="reveal" style="--d:4"><span class="list__n" aria-hidden="true">04</span><div><h3>Τίτλος υπηρεσίας</h3><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p></div></li>
+        </ol>
+      </div>
+      <?php /* Εικονογράφηση: καθιστικό (ανάβει το φωτιστικό και λικνίζεται το φυτό) */ ?>
+      <figure class="media media--sticky" style="--r: 4 / 5">
+        <svg class="ill" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: καθιστικό με καναπέ και φωτιστικό">
+          <rect width="400" height="500" class="f-bone"/>
+          <rect y="380" width="400" height="120" class="f-pale"/>
+          <path class="s" d="M0 380h400"/>
+          <path class="f-mid s" d="M52 300V170a64 64 0 0 1 128 0V300z"/>
+          <path class="s" d="M116 106V300M52 224h128"/>
+          <rect x="250" y="112" width="96" height="124" class="f-bone s"/>
+          <circle cx="286" cy="152" r="14" class="f-sage"/>
+          <path class="f-sage s" d="M250 236l34-52 22 30 16-20 24 42z"/>
+          <ellipse cx="200" cy="442" rx="150" ry="20" class="f-mid"/>
+          <path class="glow" d="M326 254l52 0 34 126H292z"/>
+          <rect x="84" y="292" width="232" height="62" rx="18" class="f-sage s"/>
+          <rect x="70" y="326" width="260" height="62" rx="16" class="f-sage s"/>
+          <path class="s" d="M200 326v62M86 388v22M314 388v22"/>
+          <path class="s" d="M352 392V252"/>
+          <path class="lamp f-warm s" d="M326 254l52 0-12-42h-28z"/>
+          <path class="f-ink" d="M22 392l8 44h30l8-44z"/>
+          <g class="leaves">
+            <path class="f-sage s" d="M44 392c-26-20-30-52-10-76 18 22 22 50 10 76z"/>
+            <path class="f-sage s" d="M44 392c10-30 30-52 56-56-4 28-26 50-56 56z"/>
+            <path class="f-sage s" d="M44 392c-4-34 4-62 24-80 8 30 0 58-24 80z"/>
+          </g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΠΩΣ ΔΟΥΛΕΥΟΥΜΕ»: πλατιά εικόνα και τρία βήματα από κάτω */ ?>
+  <section class="sec sec--tint" id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <h2 id="process-title" class="reveal">Πώς δουλεύουμε</h2>
+      <?php /* Πλατιά εικονογράφηση: παραθαλάσσιο χωριό (ανεβαίνει ο ήλιος, μπαίνει η βάρκα, ζωγραφίζονται τα κύματα) */ ?>
+      <figure class="media media--wide" style="--r: 21 / 9">
+        <svg class="ill" viewBox="0 0 840 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: παραθαλάσσιο χωριό με λευκά σπίτια, ήλιο και βάρκα">
+          <rect width="840" height="360" class="f-pale"/>
+          <circle class="sun f-warm" cx="610" cy="96" r="38"/>
+          <rect y="270" width="840" height="90" class="f-mid"/>
+          <path class="s wave" pathLength="1" d="M0 296q30-10 60 0t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+          <path class="s wave" pathLength="1" d="M0 326q30-10 60 0t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0"/>
+          <?php /* Ο λόφος και τα σπίτια πάνω του */ ?>
+          <path class="f-sage" d="M0 290V244C80 234 160 206 260 152 340 112 420 100 520 130 600 156 700 200 840 216V290z"/>
+          <rect class="f-bone s" x="250" y="150" width="44" height="38"/><rect class="f-sage-d" x="267" y="167" width="11" height="21"/><path class="f-sage-d s" d="M259 150a13 13 0 0 1 26 0z"/><rect class="f-bone s" x="302" y="128" width="42" height="38"/><rect class="f-sage-d" x="318" y="145" width="10" height="21"/><rect class="f-bone s" x="352" y="114" width="48" height="40"/><rect class="f-sage-d" x="370" y="132" width="12" height="22"/><path class="f-sage-d s" d="M362 114a14 14 0 0 1 29 0z"/><rect class="f-bone s" x="408" y="108" width="44" height="38"/><rect class="f-sage-d" x="425" y="125" width="11" height="21"/><rect class="f-bone s" x="458" y="116" width="46" height="40"/><rect class="f-sage-d" x="475" y="134" width="11" height="22"/><rect class="f-bone s" x="512" y="136" width="44" height="38"/><rect class="f-sage-d" x="529" y="153" width="11" height="21"/><path class="f-sage-d s" d="M521 136a13 13 0 0 1 26 0z"/><rect class="f-bone s" x="566" y="152" width="46" height="40"/><rect class="f-sage-d" x="583" y="170" width="11" height="22"/><rect class="f-bone s" x="620" y="168" width="44" height="38"/><rect class="f-sage-d" x="637" y="185" width="11" height="21"/><rect class="f-bone s" x="676" y="182" width="48" height="40"/><rect class="f-sage-d" x="694" y="200" width="12" height="22"/><path class="f-sage-d s" d="M686 182a14 14 0 0 1 29 0z"/><rect class="f-bone s" x="150" y="200" width="44" height="38"/><rect class="f-sage-d" x="167" y="217" width="11" height="21"/><rect class="f-bone s" x="100" y="222" width="42" height="36"/><rect class="f-sage-d" x="116" y="238" width="10" height="20"/><path class="f-sage-d s" d="M108 222a13 13 0 0 1 25 0z"/><rect class="f-bone s" x="200" y="176" width="42" height="36"/><rect class="f-sage-d" x="216" y="192" width="10" height="20"/>
+          <?php /* Η βάρκα */ ?>
+          <g class="boat"><path class="f-ink" d="M690 300h70l-12 18h-46z"/><path class="f-bone s" d="M722 296V240l32 56z"/></g>
+        </svg>
+      </figure>
+      <?php /* Τα τρία βήματα. Οι αριθμοί 1, 2, 3 είναι σκόπιμοι (δείχνουν σειρά) */ ?>
+      <ol class="steps">
+        <li class="reveal" style="--d:0"><span class="steps__n" aria-hidden="true">1</span><h3>Τίτλος βήματος</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p></li>
+        <li class="reveal" style="--d:1"><span class="steps__n" aria-hidden="true">2</span><h3>Τίτλος βήματος</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p></li>
+        <li class="reveal" style="--d:2"><span class="steps__n" aria-hidden="true">3</span><h3>Τίτλος βήματος</h3><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «Η ΔΙΑΦΟΡΑ»: slider Πριν / Μετά (σύρετε με το ποντίκι ή το δάχτυλο, ή με τα βελάκια του πληκτρολογίου) */ ?>
+  <section class="sec" id="difference" aria-labelledby="difference-title">
+    <div class="wrap">
+      <h2 id="difference-title" class="reveal">Η διαφορά</h2>
+      <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Σύρετε για να δείτε πριν και μετά.</p>
+      <?php /* Το --p είναι η θέση του διαχωριστικού (50% = στη μέση). Το main.js το ενημερώνει */ ?>
+      <div class="cmp" id="cmp" style="--p: 50%">
+        <svg class="cmp__layer cmp__after" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
+        <svg class="cmp__layer cmp__before" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
+        <?php /* Ετικέτες Πριν / Μετά */ ?>
+        <span class="cmp__tag cmp__tag--b" aria-hidden="true">Πριν</span>
+        <span class="cmp__tag cmp__tag--a" aria-hidden="true">Μετά</span>
+        <?php /* Η κάθετη γραμμή με τον στρογγυλό δείκτη */ ?>
+        <span class="cmp__bar" aria-hidden="true"><span class="cmp__knob"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
+        <?php /* Αόρατο ρυθμιστικό (range) από πάνω: δέχεται το σύρσιμο και κάνει το slider προσβάσιμο */ ?>
+        <input class="cmp__range" id="cmp-range" type="range" min="0" max="100" value="50" aria-label="Σύγκριση πριν και μετά">
+      </div>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΑΚΙΝΗΤΑ»: γκαλερί με τρεις εικόνες διαφορετικού μεγέθους και λεζάντες. Αντικαταστήστε τις με φωτογραφίες ακινήτων */ ?>
+  <section class="sec sec--tint" id="properties" aria-labelledby="properties-title">
+    <div class="wrap">
+      <h2 id="properties-title" class="reveal">Ακίνητα</h2>
+      <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+      <div class="gallery">
+        <?php /* Εικόνα 1 (ψηλή): πολυκατοικία με μπαλκόνια */ ?>
+        <figure class="gallery__a">
+          <div class="media" style="--r: 3 / 4">
+            <svg class="ill" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: πολυκατοικία με μπαλκόνια">
+              <rect width="300" height="400" class="f-pale"/>
+              <rect x="50" y="56" width="200" height="300" class="f-bone s"/>
+              <rect x="44" y="46" width="212" height="14" class="f-ink"/>
+              <rect class="w s" style="--k:0" x="66" y="84" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:5" x="120" y="84" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:10" x="174" y="84" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:4" x="66" y="152" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:9" x="120" y="152" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:3" x="174" y="152" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:8" x="66" y="220" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:2" x="120" y="220" width="44" height="38" rx="2"/>
+          <rect class="w s" style="--k:7" x="174" y="220" width="44" height="38" rx="2"/>
+              <path class="s f-sage" d="M60 128h56v8H60zM170 128h66v8h-66zM60 196h56v8H60zM170 196h66v8h-66zM60 264h56v8H60zM170 264h66v8h-66z"/>
+              <path class="f-sage s" d="M126 356V318a24 24 0 0 1 48 0V356z"/>
+              <rect y="356" width="300" height="44" class="f-sage"/><path class="s" d="M0 356h300"/>
+            </svg>
+          </div>
+          <figcaption>Τίτλος ακινήτου · Lorem ipsum</figcaption>
+        </figure>
+        <?php /* Εικόνα 2 (πλατιά): βίλα με πισίνα */ ?>
+        <figure class="gallery__b">
+          <div class="media" style="--r: 4 / 3">
+            <svg class="ill" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: βίλα με πισίνα">
+              <rect width="400" height="300" class="f-pale"/>
+              <circle cx="326" cy="60" r="28" class="f-warm"/>
+              <rect x="60" y="100" width="190" height="100" class="f-bone s"/>
+              <rect x="50" y="90" width="210" height="12" class="f-ink"/>
+              <rect class="w s" style="--k:2" x="78" y="120" width="70" height="64" rx="2"/>
+              <rect class="w s" style="--k:6" x="166" y="120" width="70" height="64" rx="2"/>
+              <rect y="200" width="400" height="100" class="f-sage"/>
+              <path class="s" d="M0 200h400"/>
+              <rect x="150" y="222" width="220" height="56" rx="6" class="f-mid s"/>
+              <path class="s wave" pathLength="1" d="M164 244q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0"/>
+              <path class="s wave" pathLength="1" d="M164 262q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0"/>
+              <circle cx="36" cy="186" r="28" class="f-sage s"/>
+            </svg>
+          </div>
+          <figcaption>Τίτλος ακινήτου · Lorem ipsum</figcaption>
+        </figure>
+        <?php /* Εικόνα 3 (τετράγωνη): σπίτι με κλειδί στην πόρτα */ ?>
+        <figure class="gallery__c">
+          <div class="media" style="--r: 1 / 1">
+            <svg class="ill" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Εικονογράφηση: σπίτι με κλειδί στην πόρτα">
+              <rect width="300" height="300" class="f-pale"/>
+              <path class="f-bone s" d="M60 140 150 66l90 74v110H60z"/>
+              <path class="f-sage s" d="M126 250V190a24 24 0 0 1 48 0V250z"/>
+              <rect class="w s" style="--k:3" x="80" y="156" width="30" height="30" rx="2"/>
+              <rect class="w s" style="--k:8" x="190" y="156" width="30" height="30" rx="2"/>
+              <g class="keyswing"><circle class="s f-warm" cx="196" cy="216" r="9"/><circle class="s" cx="196" cy="216" r="3"/><path class="s" d="M196 225v28M196 240h10M196 250h7"/></g>
+              <rect y="250" width="300" height="50" class="f-sage"/><path class="s" d="M0 250h300"/>
+            </svg>
+          </div>
+          <figcaption>Τίτλος ακινήτου · Lorem ipsum</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <?php /* ΣΚΟΥΡΗ ΖΩΝΗ: γνώμη πελάτη (προσωρινό κείμενο). Οι λέξεις εμφανίζονται μία-μία και τα εισαγωγικά "ζωγραφίζονται" */ ?>
+  <section class="sec sec--dark sec--quote" aria-label="Απόψεις">
+    <div class="wrap wrap--narrow">
+      <svg class="qmark" viewBox="0 0 64 48" aria-hidden="true"><path pathLength="1" d="M4 44V24C4 12 10 6 22 4M36 44V24c0-12 6-18 18-20"/></svg>
+      <blockquote class="quote">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <?php /* Όνομα και ιδιότητα αυτού που μιλά (βάλτε πραγματικά στοιχεία, μόνο με την άδειά του) */ ?>
+        <footer>Όνομα Επώνυμο · Ιδιότητα</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΣΥΧΝΕΣ ΕΡΩΤΗΣΕΙΣ»: ανοιγοκλειόμενες απαντήσεις (accordion). Κάθε ερώτηση είναι ένα κουμπί· το main.js αλλάζει το aria-expanded */ ?>
+  <section class="sec" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq">
+      <h2 id="faq-title" class="reveal">Συχνές ερωτήσεις</h2>
+      <div class="acc" id="acc">
+        <?php /* Μία ερώτηση + απάντηση. Για νέα ερώτηση αντιγράψτε το block και αλλάξτε τα id (b1/p1 → b5/p5) */ ?>
+        <div class="acc__item reveal" style="--d:1">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="p1" id="b1">Lorem ipsum dolor sit amet;<span class="acc__ic" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="p1" role="region" aria-labelledby="b1"><div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div></div>
+        </div>
+        <div class="acc__item reveal" style="--d:2">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="p2" id="b2">Consectetur adipiscing elit;<span class="acc__ic" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="p2" role="region" aria-labelledby="b2"><div><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p></div></div>
+        </div>
+        <div class="acc__item reveal" style="--d:3">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="p3" id="b3">Sed do eiusmod tempor;<span class="acc__ic" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="p3" role="region" aria-labelledby="b3"><div><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Sunt in culpa qui officia deserunt.</p></div></div>
+        </div>
+        <div class="acc__item reveal" style="--d:4">
+          <h3><button class="acc__btn" type="button" aria-expanded="false" aria-controls="p4" id="b4">Ut labore et dolore magna;<span class="acc__ic" aria-hidden="true"></span></button></h3>
+          <div class="acc__panel" id="p4" role="region" aria-labelledby="b4"><div><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <?php /* ΕΝΟΤΗΤΑ «ΕΠΙΚΟΙΝΩΝΙΑ»: τίτλος και στοιχεία αριστερά, φόρμα δεξιά */ ?>
+  <section class="sec sec--tint" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact">
+      <div class="contact__intro">
+        <h2 id="contact-title" class="reveal">Πείτε μας για το ακίνητό σας</h2>
+        <p class="reveal lead-p" style="--d:1">Συμπληρώστε τη φόρμα και θα επικοινωνήσουμε μαζί σας.</p>
+        <?php /* Τα στοιχεία επικοινωνίας αλλάζουν από: Εμφάνιση → Προσαρμογή → Rev Estates → «Στοιχεία επικοινωνίας» */ ?>
+        <p class="reveal contact__info" style="--d:2"><?php echo nl2br( esc_html( get_theme_mod( 'rev_contact_info', 'Στοιχεία επικοινωνίας: lorem ipsum dolor sit amet.' ) ) ); ?></p>
+        <?php /* Σχέδιο κλειδιού: "ζωγραφίζεται" όταν φανεί, γέρνει όταν γράφετε στη φόρμα και γυρίζει όταν σταλεί το μήνυμα */ ?>
+        <svg class="key" id="key" viewBox="0 0 80 200" aria-hidden="true">
+          <g>
+            <circle pathLength="1" cx="40" cy="36" r="24"/>
+            <circle pathLength="1" cx="40" cy="36" r="8"/>
+            <path pathLength="1" d="M40 60v128M40 150h22M40 172h16"/>
+          </g>
+        </svg>
+      </div>
+
+      <?php /* ΦΟΡΜΑ ΕΠΙΚΟΙΝΩΝΙΑΣ.
+           Το action="#" είναι προσωρινό: στο WordPress αντικαθίσταται με τον χειριστή της φόρμας (π.χ. Contact Form 7).
+           Ο έλεγχος των πεδίων γίνεται από το main.js (novalidate = ο browser δεν δείχνει τα δικά του μηνύματα). */ ?>
+      <form id="contact-form" action="#" method="post" novalidate class="reveal" style="--d:1">
+        <?php /* Κρυφό πεδίο-παγίδα για ρομπότ: οι άνθρωποι δεν το βλέπουν και δεν το συμπληρώνουν */ ?>
+        <div class="hp" aria-hidden="true"><label>Αφήστε αυτό το πεδίο κενό<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <?php /* Πεδίο: Ονοματεπώνυμο (υποχρεωτικό). Το <p class="err"> είναι το μήνυμα λάθους, κρυφό μέχρι να χρειαστεί */ ?>
+        <div class="field">
+          <label for="f-name">Ονοματεπώνυμο</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+          <p class="err" id="e-name" hidden>Γράψτε το όνομά σας.</p>
+        </div>
+        <?php /* Πεδίο: Τηλέφωνο (υποχρεωτικό, τουλάχιστον 8 ψηφία) */ ?>
+        <div class="field">
+          <label for="f-phone">Τηλέφωνο</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+          <p class="err" id="e-phone" hidden>Γράψτε ένα τηλέφωνο για να σας καλέσουμε.</p>
+        </div>
+        <?php /* Πεδίο: Email (προαιρετικό, αλλά αν γραφτεί πρέπει να είναι σωστό) */ ?>
+        <div class="field">
+          <label for="f-email">Email <span class="opt">(προαιρετικό)</span></label>
+          <input id="f-email" name="email" type="email" autocomplete="email">
+          <p class="err" id="e-email" hidden>Το email δεν φαίνεται σωστό.</p>
+        </div>
+        <?php /* Πεδίο: Περιοχή του ακινήτου (υποχρεωτικό) */ ?>
+        <div class="field">
+          <label for="f-area">Περιοχή του ακινήτου</label>
+          <input id="f-area" name="area" type="text" required>
+          <p class="err" id="e-area" hidden>Πείτε μας πού βρίσκεται το ακίνητο.</p>
+        </div>
+        <?php /* Πεδίο: Μήνυμα (προαιρετικό, σε όλο το πλάτος) */ ?>
+        <div class="field field--wide">
+          <label for="f-msg">Μήνυμα <span class="opt">(προαιρετικό)</span></label>
+          <textarea id="f-msg" name="message" rows="3"></textarea>
+        </div>
+        <?php /* Συγκατάθεση GDPR: χωρίς αυτήν δεν στέλνεται η φόρμα. Προσαρμόστε το κείμενο με τη νομική σας πολιτική */ ?>
+        <div class="field field--wide consent">
+          <input id="f-consent" name="consent" type="checkbox" required>
+          <label for="f-consent">Συμφωνώ να χρησιμοποιήσετε τα στοιχεία μου για να επικοινωνήσετε μαζί μου σχετικά με αυτό το αίτημα.</label>
+          <p class="err" id="e-consent" hidden>Χρειάζεται η συγκατάθεσή σας για να στείλουμε το μήνυμα.</p>
+        </div>
+        <?php /* Κουμπί αποστολής και μήνυμα κατάστασης (π.χ. "Λάβαμε το μήνυμά σας") */ ?>
+        <div class="field--wide actions">
+          <button class="btn btn--send" type="submit">Αποστολή μηνύματος</button>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<?php get_footer(); ?>
