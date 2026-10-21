@@ -216,6 +216,7 @@ get_header();
       <p class="reveal lead-p" style="--d:1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Σύρετε για να δείτε πριν και μετά.</p>
       <?php /* Το --p είναι η θέση του διαχωριστικού (50% = στη μέση). Το main.js το ενημερώνει */ ?>
       <div class="cmp" id="cmp" style="--p: 50%">
+        <div class="cmp__inner">
         <svg class="cmp__layer cmp__after" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
         <svg class="cmp__layer cmp__before" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#street"/></svg>
         <?php /* Ετικέτες Πριν / Μετά */ ?>
@@ -225,6 +226,7 @@ get_header();
         <span class="cmp__bar" aria-hidden="true"><span class="cmp__knob"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></span>
         <?php /* Αόρατο ρυθμιστικό (range) από πάνω: δέχεται το σύρσιμο και κάνει το slider προσβάσιμο */ ?>
         <input class="cmp__range" id="cmp-range" type="range" min="0" max="100" value="50" aria-label="Σύγκριση πριν και μετά">
+        </div>
       </div>
     </div>
   </section>

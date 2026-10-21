@@ -271,12 +271,12 @@ h2 { font-size: clamp(2rem, 4.2vw, 3.5rem); font-weight: 500; }
 .media--wide { margin-top: clamp(1.75rem, 4vw, 3rem); }
 .media img, .media > svg { translate: 0 var(--py, 0px); }        /* parallax: η μετατόπιση --py έρχεται από το main.js */
 .js .media > svg, .js .media img { scale: 1.1; }                 /* αρχικά λίγο μεγεθυσμένη */
-.js .media.in > svg, .js .media.in img { scale: 1; transition: scale 1.2s var(--ease-out); }  /* όταν φανεί, "κάθεται" στο κανονικό μέγεθος */
+.js .media.in > svg, .js .media.in img { scale: 1; transition: scale 1.2s var(--ease-out), clip-path .95s var(--ease-in-out); }  /* όταν φανεί, "κάθεται" στο κανονικό μέγεθος και αποκαλύπτεται */
 @media (hover: hover) and (pointer: fine) { .js .media.in:hover > svg, .js .media.in:hover img { scale: 1.04; transition: scale .6s var(--ease-out); } }  /* μικρό zoom στο hover */
-.js .media { clip-path: inset(0 0 100% 0); }                      /* κρυμμένη (κομμένη από κάτω) */
-.js .media.in { clip-path: inset(0); transition: clip-path .95s var(--ease-in-out); }  /* αποκαλύπτεται από πάνω προς τα κάτω */
-.gallery figure:nth-child(2) .media.in { transition-delay: .1s; }  /* στη γκαλερί οι εικόνες εμφανίζονται με μικρή διαφορά */
-.gallery figure:nth-child(3) .media.in { transition-delay: .2s; }
+.js .media > svg, .js .media img { clip-path: inset(0 0 100% 0); }    /* κρυμμένη (κομμένη από κάτω). ΠΡΟΣΟΧΗ: το clip-path μπαίνει στο παιδί και ΟΧΙ στο .media, αλλιώς το Chrome δεν "βλέπει" ποτέ το στοιχείο στην οθόνη */
+.js .media.in > svg, .js .media.in img { clip-path: inset(0); }        /* αποκαλύπτεται από πάνω προς τα κάτω */
+.gallery figure:nth-child(2) .media.in > svg { transition-delay: 0s, .1s; }  /* στη γκαλερί οι εικόνες εμφανίζονται με μικρή διαφορά */
+.gallery figure:nth-child(3) .media.in > svg { transition-delay: 0s, .2s; }
 
 /* Εικονογραφήσεις SVG: κοινές κλάσεις για γραμμές και χρώματα */
 .ill { width: 100%; height: 100%; }
@@ -334,8 +334,9 @@ h2 { font-size: clamp(2rem, 4.2vw, 3.5rem); font-weight: 500; }
 .cmp__range::-webkit-slider-thumb { -webkit-appearance: none; width: 3rem; height: 100vh; }
 .cmp__range::-moz-range-thumb { width: 3rem; height: 100vh; border: 0; }
 .cmp:has(.cmp__range:focus-visible) { outline: 2px solid var(--green); outline-offset: 4px; }  /* ορατή εστίαση πληκτρολογίου */
-.js .cmp { clip-path: inset(0 0 100% 0); }                                                 /* αποκάλυψη όπως οι εικόνες */
-.js .cmp.in { clip-path: inset(0); transition: clip-path .95s var(--ease-in-out); }
+.cmp__inner { position: absolute; inset: 0; }                                              /* εσωτερικό περιτύλιγμα: εδώ μπαίνει το clip-path της αποκάλυψης */
+.js .cmp__inner { clip-path: inset(0 0 100% 0); }                                          /* αποκάλυψη όπως οι εικόνες */
+.js .cmp.in .cmp__inner { clip-path: inset(0); transition: clip-path .95s var(--ease-in-out); }
 
 /* ================= ΓΚΑΛΕΡΙ (ακίνητα) ================= */
 .gallery { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); margin-top: clamp(2rem, 5vw, 3.5rem); align-items: start; }  /* πλέγμα 12 στηλών */
@@ -447,7 +448,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-bottom-color:
   .marquee__track { animation: none; flex-wrap: wrap; width: auto; }
   .js .stitle .wi, .js .stitle.in .wi { transform: none; transition: none; }
   .js .reveal, .js .reveal.in { transform: none; filter: none; transition: opacity .25s ease; transition-delay: 0s; }  /* μένει μόνο ήπια αλλαγή διαφάνειας */
-  .js .media, .js .media.in, .js .cmp, .js .cmp.in { clip-path: none; transition: none; }
+  .js .media > svg, .js .media img, .js .media.in > svg, .js .media.in img, .js .cmp__inner, .js .cmp.in .cmp__inner { clip-path: none; transition: none; }
   .js .media > svg, .js .media img, .js .media.in > svg, .js .media.in img { scale: 1; translate: none; transition: none; }
   .js .steps li::before, .js .steps li.in::before { transform: none; transition: none; }
   .js .qmark path, .js .key circle, .js .key path { stroke-dashoffset: 0; transition: none; }
